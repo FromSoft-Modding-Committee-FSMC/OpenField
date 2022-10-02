@@ -77,7 +77,7 @@ typedef struct
 	char TextureName[64];
 }  MPCTextureReference;
 
-      0        
+  
 /** MPC Texture Data (Length = N Bytes, PacketID = MPC_PKT_TEXTURED)
  * stores only the file name of a texture
 **/
@@ -113,6 +113,7 @@ typedef struct
 	MPCTexturePalette palettes[numPalette];
 	MPCTexturePlane planes[numPlane];
 }  MPCTextureData;
+
 
 /** MPC Fast Vertex Buffer (Length = 32 + N Bytes, PacketID = MPC_PKT_VBNIFAST)
  * The 'fast' vertex buffer is intended for direct loading into GPU memory, without repeated File/IO requirements.
