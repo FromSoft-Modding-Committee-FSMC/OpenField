@@ -17,6 +17,7 @@
 #define MPC_PKT_USERDATA "USER"		//A User Packet. Stores non format defined data.
 #define MPC_PKT_TEXTNOTE "TXTN"		//Simple text packet. Could be used for copyright notices.
 #define MPC_PKT_TEXTTABL "TXTT"		//More advanced text packet, using a key/data type storage.
+#define MPC_PKT_ENDFILEP "ENDF"		//End of File packet. dataCount and dataPerSize should be 0 when used.
 
 /** MPC Header	(Length = 16 Bytes)
  * Stores basic information about the MPC file
