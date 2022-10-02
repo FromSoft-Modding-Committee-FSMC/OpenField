@@ -6,7 +6,19 @@ include(ExternalProject)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_subdirectory(./src/openfieldcore/)
+#
+# External Dependancies from git submodules
+#
+
+# FMTLIB
+add_subdirectory(external/fmt)
+set(FMT_DOC OFF)
+set(FMT_TEST OFF)
+
+#
+# Dependancies
+#
+add_subdirectory(src/openfieldcore)
 
 # Test Project
 add_executable(OpenField_Test)

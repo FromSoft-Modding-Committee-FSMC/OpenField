@@ -1,44 +1,39 @@
 #include "logger.hpp"
 
-#include <iostream>
 #include <ctime>
 
 namespace OFC
 {
-    void Logger::Log(const char* tag, const char* colour, const char* message)
+    void Logger::Log(const char* tag, std::string message)
     {
         #ifdef _OFC_LOGGER_ENABLED
 
         std::time_t time = std::time(nullptr);
         tm* localtime = std::localtime(&time);
 
-        char timeCBuffer[32];
+        std::string fmtMessage = fmt::format("[{:02}:{:02}:{:02}]-[{}]: {}\0", localtime->tm_hour, localtime->tm_min, localtime->tm_sec, tag, message);
 
-        //TO-DO: Replace with std::format when avalible, or {fmt} library as suggested.
-        snprintf(timeCBuffer, sizeof(timeCBuffer), "%i:%i:%i", localtime->tm_hour, localtime->tm_min, localtime->tm_sec);
-        snprintf(messageBuffer, _OFC_LOGGER_BUFFSIZE, "[%s]-[%s]: %s\0", timeCBuffer, tag, message);
-
-        std::cout << messageBuffer << "\n";
+        fmt::print("{}\n", fmtMessage);
 
         #endif
     }
 
     void Logger::Info(std::string message)
     {
-        Log("Info\0", "91m\0", message.c_str());
+        Log("Info\0", message);
     }
 
     void Logger::Warn(std::string message)
     {
-        Log("Warn\0", "93m\0", message.c_str());
+        Log("Warn\0", message);
     }
 
     void Logger::Error(std::string message)
     {
         #ifdef _OFC_LOGGER_PROFANITY
-        Log("Shit\0", "91m\0", message.c_str());
+        Log("Shit\0", message);
         #else
-        Log("Error\0", "91m\0", message.c_str());
+        Log("Error\0", message);
         #endif
     }
 }

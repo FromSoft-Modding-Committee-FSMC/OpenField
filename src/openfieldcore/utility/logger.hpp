@@ -3,18 +3,15 @@
 
 #include <memory>
 #include <string>
+#include <fmt\format.h>
 
 #define _OFC_LOGGER_ENABLED
-#define _OFC_LOGGER_BUFFSIZE 1024
 #define _OFC_LOGGER_PROFANITY
 
 namespace OFC 
 {
     class Logger
     {
-        private:
-            char messageBuffer[_OFC_LOGGER_BUFFSIZE];
-
         public:
             Logger() {}
 
@@ -22,7 +19,7 @@ namespace OFC
             Logger(Logger const&) = delete;
             Logger& operator=(Logger const&) = delete;
 
-            void Log(const char* tag, const char* colour, const char* message);
+            void Log(const char* tag, std::string message);
 
             /** @brief Log an error to both file and console.
              */
