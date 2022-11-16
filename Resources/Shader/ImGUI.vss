@@ -1,0 +1,17 @@
+#version 330 core
+layout(location = 0) in vec2 vertexPosition;
+layout(location = 1) in vec2 vertexTexture;
+layout(location = 2) in vec4 vertexColour;
+
+out vec4 fragColour;
+out vec2 textureData;
+
+uniform mat4 camera;
+
+void main()
+{
+	gl_Position = camera * vec4(vertexPosition, 0f, 1.0f);
+	fragColour = vertexColour / 255.0f;
+
+	textureData = vertexTexture;
+}
