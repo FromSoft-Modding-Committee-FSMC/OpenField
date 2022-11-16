@@ -42,13 +42,13 @@ jobs:
       - name: Publish Editor (Debug)
         uses: actions/upload-artifact@v3
         with:
-          name: Open Field Editor (Debug)
+          name: Open Field Editor (Windows, Debug)
           path: 'OpenFieldEditor\bin\OpenFieldEditor_Debug.zip'
           
       - name: Publish Editor (Release)
         uses: actions/upload-artifact@v3
         with:
-          name: Open Field Editor (Release)
+          name: Open Field Editor (Windows, Release)
           path: 'OpenFieldEditor\bin\OpenFieldEditor_Release.zip'
           
   # UBUNTU LINUX BUILD
@@ -74,7 +74,7 @@ jobs:
         
       - name: Package (Debug, Release)
         run: | 
-          cd OpenFieldEditor\bin
+          cd OpenFieldEditor/bin
           tar -a -c -f "OpenFieldEditor_Debug.zip" Debug
           tar -a -c -f "OpenFieldEditor_Release.zip" Release
           cd ..
@@ -83,11 +83,11 @@ jobs:
       - name: Publish Editor (Debug)
         uses: actions/upload-artifact@v3
         with:
-          name: Open Field Editor (Debug)
-          path: 'OpenFieldEditor\bin\OpenFieldEditor_Debug.zip'
+          name: Open Field Editor (Ubuntu, Debug)
+          path: 'OpenFieldEditor/bin/OpenFieldEditor_Debug.zip'
           
       - name: Publish Editor (Release)
         uses: actions/upload-artifact@v3
         with:
-          name: Open Field Editor (Release)
-          path: 'OpenFieldEditor\bin\OpenFieldEditor_Release.zip'
+          name: Open Field Editor (Ubuntu, Release)
+          path: 'OpenFieldEditor/bin/OpenFieldEditor_Release.zip'
