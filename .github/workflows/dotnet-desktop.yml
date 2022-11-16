@@ -43,13 +43,13 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Open Field Editor (Windows, Debug)
-          path: 'OpenFieldEditor\bin\OpenFieldEditor_Debug.zip'
+          path: 'OpenFieldEditor\bin\Debug\'
           
       - name: Publish Editor (Release)
         uses: actions/upload-artifact@v3
         with:
           name: Open Field Editor (Windows, Release)
-          path: 'OpenFieldEditor\bin\OpenFieldEditor_Release.zip'
+          path: 'OpenFieldEditor\bin\Release\'
           
   # UBUNTU LINUX BUILD
   ubuntu-build:
@@ -71,23 +71,15 @@ jobs:
         
       - name: Build (Release)
         run: dotnet build --configuration Release
-        
-      - name: Package (Debug, Release)
-        run: | 
-          cd OpenFieldEditor/bin
-          tar -a -c -f "OpenFieldEditor_Debug.zip" Debug
-          tar -a -c -f "OpenFieldEditor_Release.zip" Release
-          cd ..
-          dir
           
       - name: Publish Editor (Debug)
         uses: actions/upload-artifact@v3
         with:
           name: Open Field Editor (Ubuntu, Debug)
-          path: 'OpenFieldEditor/bin/OpenFieldEditor_Debug.zip'
+          path: 'OpenFieldEditor/bin/Debug/'
           
       - name: Publish Editor (Release)
         uses: actions/upload-artifact@v3
         with:
           name: Open Field Editor (Ubuntu, Release)
-          path: 'OpenFieldEditor/bin/OpenFieldEditor_Release.zip'
+          path: 'OpenFieldEditor/bin/Release/'
