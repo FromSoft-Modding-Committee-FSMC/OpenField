@@ -9,7 +9,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  windows-x64-build:
+  windows-build:
     runs-on: windows-latest
     
     steps:
@@ -24,10 +24,10 @@ jobs:
         run: dotnet --version
         
       - name: Build (Debug)
-        run: dotnet build --arch x64 --configuration Debug
+        run: dotnet build --configuration Debug
         
       - name: Build (Release)
-        run: dotnet build --arch x64 --configuration Release
+        run: dotnet build --configuration Release
         
       - name: Package (Debug, Release)
         run: | 
