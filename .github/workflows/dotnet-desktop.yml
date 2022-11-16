@@ -9,7 +9,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-windows:
+  windows-build:
     runs-on: windows-latest
     
     steps:
@@ -26,6 +26,9 @@ jobs:
       - name: Build
         run: dotnet build
         
-      - name: Package
+      - name: Package Editor
         run: | 
+          cd OpenFieldEditor
+          dir
+          cd bin
           dir
