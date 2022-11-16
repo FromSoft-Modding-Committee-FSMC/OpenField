@@ -176,3 +176,13 @@ typedef struct
 	
 	MPCMorphPoseVertex PoseData[numVertex];
 } MPCMorphPose;
+
+/** MPC Waveform (Length = , PacketID = MPC_PKT_WAVEFORM)
+ * Stores an audio waveform, and data required for proper playback.
+**/
+typedef struct
+{
+	uint32_t sampleRate;
+	uint16_t sampleFormat;	//U8, S8, U16, S16, U32, S32, F32
+	uint16_t channelCount;  //0, 1, ..., 5, ..., 10 ...
+} MPCWaveform;

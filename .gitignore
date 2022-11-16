@@ -1,7 +1,0 @@
-#VSCode
-.vscode/*
-.history/
-
-#CMake
-build/*
-build/

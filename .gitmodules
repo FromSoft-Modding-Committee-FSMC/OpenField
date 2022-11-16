@@ -1,9 +1,0 @@
-[submodule "external/fmt"]
-	path = external/fmt
-	url = https://github.com/fmtlib/fmt.git
-[submodule "external/openalsoft"]
-	path = external/openalsoft
-	url = https://github.com/kcat/openal-soft.git
-[submodule "external/sdl2"]
-	path = external/sdl2
-	url = https://github.com/libsdl-org/SDL.git

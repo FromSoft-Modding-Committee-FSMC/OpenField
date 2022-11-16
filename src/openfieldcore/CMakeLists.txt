@@ -11,14 +11,20 @@ target_sources(OpenField_Core PRIVATE
 target_include_directories(OpenField_Core 
   PUBLIC /../../external/fmt/include
   PUBLIC /../../external/glad2/include
+  PUBLIC /../../external/openalsoft/include
+  PUBLIC /../../external/sdl2/include
 )
 
 # Core Library Locations
 target_link_directories(OpenField_Core
-  PRIVATE ${FMT_LIB_DIR}
+  PRIVATE external/fmt
+  PRIVATE external/openalsoft
+  PRIVATE external/sdl2
 )
 
 # Core Libraries
 target_link_libraries(OpenField_Core
-  fmt::fmt-header-only
+  fmt
+  OpenAL
+  SDL2-static
 )
