@@ -23,14 +23,5 @@ jobs:
       - name: Display .NET version
         run: dotnet --version
         
-      - name: Install OpenTK Version 4.7.5
-        run: dotnet add package OpenTK --version 4.7.5
-        
-      - name: Install Moonsharp Version 2.0.0
-        run: dotnet add package MoonSharp --version 2.0.0
-        
-      - name: Install ImGui.NET Version 1.88.0
-        run: dotnet add package ImGui.NET --version 1.88.0
-        
       - name: Build
         run: dotnet build
