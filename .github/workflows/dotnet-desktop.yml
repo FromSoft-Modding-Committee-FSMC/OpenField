@@ -9,7 +9,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  windows-build:
+  windows-x64-build:
     runs-on: windows-latest
     
     steps:
@@ -23,12 +23,22 @@ jobs:
       - name: Display .NET version
         run: dotnet --version
         
-      - name: Build
-        run: dotnet build
+      - name: Build (Debug)
+        run: dotnet build --arch x64 --configuration Debug
         
-      - name: Package Editor
+      - name: Build (Release)
+        run: dotnet build --arch x64 --configuration Release
+        
+      - name: Package (Debug, Release)
         run: | 
-          cd OpenFieldEditor
+          cd OpenFieldEditor\bin
+          tar -a -c -f "OpenFieldEditor_Debug.zip" Debug
+          tar -a -c -f "OpenFieldEditor_Release.zip" Release
+          cd ..
           dir
-          cd bin
-          dir
+          
+      - name: Publish Editor (Debug)
+        uses: actions/upload-artifact@v2
+        with:
+          name: Open Field Editor (Debug)
+          path: 'OpenFieldEditor\bin\OpenFieldEditor_Debug.zip'
