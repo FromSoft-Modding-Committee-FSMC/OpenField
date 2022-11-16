@@ -9,6 +9,8 @@ on:
     branches: [ "main" ]
 
 jobs:
+    
+  # WINDOWS BUILD
   windows-build:
     runs-on: windows-latest
     
@@ -38,7 +40,54 @@ jobs:
           dir
           
       - name: Publish Editor (Debug)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Open Field Editor (Debug)
           path: 'OpenFieldEditor\bin\OpenFieldEditor_Debug.zip'
+          
+      - name: Publish Editor (Release)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Open Field Editor (Release)
+          path: 'OpenFieldEditor\bin\OpenFieldEditor_Release.zip'
+          
+  # UBUNTU LINUX BUILD
+  ubuntu-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.x'
+          
+      - name: Display .NET version
+        run: dotnet --version
+        
+      - name: Build (Debug)
+        run: dotnet build --configuration Debug
+        
+      - name: Build (Release)
+        run: dotnet build --configuration Release
+        
+      - name: Package (Debug, Release)
+        run: | 
+          cd OpenFieldEditor\bin
+          tar -a -c -f "OpenFieldEditor_Debug.zip" Debug
+          tar -a -c -f "OpenFieldEditor_Release.zip" Release
+          cd ..
+          dir
+          
+      - name: Publish Editor (Debug)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Open Field Editor (Debug)
+          path: 'OpenFieldEditor\bin\OpenFieldEditor_Debug.zip'
+          
+      - name: Publish Editor (Release)
+        uses: actions/upload-artifact@v3
+        with:
+          name: Open Field Editor (Release)
+          path: 'OpenFieldEditor\bin\OpenFieldEditor_Release.zip'
