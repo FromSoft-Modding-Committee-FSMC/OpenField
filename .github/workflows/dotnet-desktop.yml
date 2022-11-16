@@ -25,3 +25,7 @@ jobs:
         
       - name: Build
         run: dotnet build
+        
+      - name: Package
+        run: | 
+          dir
