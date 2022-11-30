@@ -63,6 +63,7 @@ namespace OFF.FileFormat
         //Data
         private FormatParameters _parameters = new FormatParameters
         {
+            name = "TIM",
             description = "Sony PlayStation [T]exture/[IM]age",
             filter = "Sony PlayStation [T]exture/[IM]age;*.tim",
             extensions = new string[]
@@ -164,6 +165,7 @@ namespace OFF.FileFormat
 
             return true;
         }
+        
         private static bool FormatValidator(byte[] buffer)
         {
             bool fileIsValid = true;
@@ -183,6 +185,7 @@ namespace OFF.FileFormat
 
             return fileIsValid;
         }
+
 
         //IFormat Interface
         public bool Load(string filepath, out TextureAsset asset)

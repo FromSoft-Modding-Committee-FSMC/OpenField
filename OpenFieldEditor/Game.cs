@@ -7,8 +7,7 @@ using OpenTK.Graphics.OpenGL;
 using ImGuiNET;
 using OFE.EditorUI;
 using OFC.Utility;
-using OFC.Numerics.Random;
-using OFE.Data;
+using OFE.EditorUI.Dialogue;
 
 namespace OFE
 {
@@ -48,11 +47,11 @@ namespace OFE
 
         //UI Temporaries
         UIConsole imguiConsole = new UIConsole(50);
+        UIOpenFileDialog ofDiag = new UIOpenFileDialog();
 
         public Game() : base(gameWindowSettings, nativeWindowSettings)
         {
-            ProjectFile file;
-            ProjectFile.LoadFromFile("D:\\REEEE\\OpenFieldProject\\Edtior Project Example\\ProjectName.epf", out file);
+            FileDrop += EventFileDrop;
         }
 
         protected override void OnLoad()
@@ -62,7 +61,13 @@ namespace OFE
             ImGuiManager.Initialize();
         }
 
-        bool consoleEnabled = false;
+        private void EventFileDrop(FileDropEventArgs obj)
+        {
+            foreach (string s in obj.FileNames)
+            {
+                Console.WriteLine(s);
+            }
+        }
 
         protected override void OnResize(ResizeEventArgs e)
         {
@@ -70,7 +75,6 @@ namespace OFE
 
             GL.Viewport(0, 0, e.Width, e.Height);
         }
-
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             base.OnRenderFrame(args);
@@ -92,7 +96,8 @@ namespace OFE
                 {
                     if (ImGui.MenuItem("From File"))
                     {
-
+                        ofDiag.ShowDialog();
+                        Log.Info("Opened dialog");
                     }
 
                     if(ImGui.BeginMenu("Recent Files..."))
@@ -118,25 +123,9 @@ namespace OFE
                 ImGui.EndMenu();
             }
 
-
-            if (ImGui.BeginMenu("View"))
-            {
-                if(ImGui.MenuItem("Console", "", ref consoleEnabled))
-                {
-
-                }
-
-                ImGui.EndMenu();
-            }
-
             ImGui.EndMainMenuBar();
 
-            if (consoleEnabled)
-            {
-                imguiConsole.Draw();
-            }
-
-            ImGui.ShowDemoWindow();
+            ofDiag.Draw();
 
             ImGuiManager.EndFrame();
 

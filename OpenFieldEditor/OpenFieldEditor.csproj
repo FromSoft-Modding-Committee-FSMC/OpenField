@@ -7,6 +7,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <RootNamespace>OFE</RootNamespace>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

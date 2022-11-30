@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32929.386
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33027.239
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenFieldRuntime", "OpenFieldRuntime\OpenFieldRuntime.csproj", "{CBA2BB92-87E0-4263-A9D6-D9445F64EE5C}"
 EndProject
@@ -10,6 +10,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenFieldForge", "OpenFieldForge\OpenFieldForge.csproj", "{4DB11ABD-D050-4950-93B7-6BCA2223997E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenFieldEditor", "OpenFieldEditor\OpenFieldEditor.csproj", "{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2AE03B0E-0881-43BE-B5EF-7D9C5D07675D} = {2AE03B0E-0881-43BE-B5EF-7D9C5D07675D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

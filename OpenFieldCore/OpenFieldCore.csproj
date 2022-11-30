@@ -9,6 +9,7 @@
   <PropertyGroup>
     <PublishReadyToRun>true</PublishReadyToRun>
     <RootNamespace>OFC</RootNamespace>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
