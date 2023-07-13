@@ -10,7 +10,7 @@
 
   <PropertyGroup>
     <PublishReadyToRun>true</PublishReadyToRun>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <RootNamespace>OFR</RootNamespace>
   </PropertyGroup>
   

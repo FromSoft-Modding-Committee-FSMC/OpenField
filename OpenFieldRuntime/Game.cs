@@ -115,6 +115,8 @@ namespace OFR
         private double frameTotal;
         private int frameSampleCount;
 
+        Random rnd = new Random();
+
         float rot = 0f;
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -154,7 +156,7 @@ namespace OFR
             timeTotal += args.Time;
             if(timeTotal >= 1.0d)
             {
-                Console.WriteLine($"Frame [FPS: {(frameTotal / frameSampleCount):F0}, MS: {(args.Time * 1000):F4}, Batches: {Render2D.BatchesThisFrame}]");
+                Console.WriteLine($"Frame [AvgFPS: {(frameTotal / frameSampleCount):F0}, RealFPS: {(frameSampleCount / timeTotal):F0}, MS: {(args.Time * 1000):F4}, Batches: {Render2D.BatchesThisFrame}]");
 
                 frameSampleCount = 0;
                 frameTotal = 0f;

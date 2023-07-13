@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 using OFC.Asset.Format;
 using OFC.Asset.FileFormat;
@@ -19,11 +21,6 @@ namespace OFC.Asset.Factory
             };
         }
 
-        /// <summary>
-        /// Registers a new IFormat handler
-        /// </summary>
-        /// <param name="handler">An instance of the handler</param>
-        /// <returns>If registration was successful or not.</returns>
         public bool RegisterHandler(IFormat<TextureAsset> handler)
         {
             if(handler == null)

@@ -4,7 +4,6 @@
     <TargetFramework>net7.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <RootNamespace>OFF</RootNamespace>
-    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

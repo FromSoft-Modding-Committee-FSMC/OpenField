@@ -5,6 +5,7 @@ using OFC.Utility;
 using OFC.IO;
 
 using OFC.Asset.Format;
+using System.Net;
 
 namespace OFC.Asset.FileFormat
 {
@@ -14,14 +15,14 @@ namespace OFC.Asset.FileFormat
         [Flags]
         enum DDSSurfaceFlags : uint
         {
-            Caps        = 0x000001,
-            Height      = 0x000002,
-            Width       = 0x000004,
-            Pitch       = 0x000008,
-            PixelFormat = 0x001000,
-            MipMapCount = 0x020000,
-            LinearSize  = 0x080000,
-            Depth       = 0x800000
+            Caps        = 0x00000001,
+            Height      = 0x00000002,
+            Width       = 0x00000004,
+            Pitch       = 0x00000008,
+            PixelFormat = 0x00001000,
+            MipMapCount = 0x00020000,
+            LinearSize  = 0x00080000,
+            Depth       = 0x00800000
         }
 
         [Flags]
@@ -33,6 +34,25 @@ namespace OFC.Asset.FileFormat
             RGB         = 0x00000040,
             YUV         = 0x00000200,
             Luminance   = 0x00020000,
+        }
+
+        [Flags]
+        enum DDSFormatCaps : uint
+        {
+            //Caps 1
+            Complex = 0x00000008,
+            Texture = 0x00001000,
+            Mipmap  = 0x00400000,
+
+            //Caps 2
+            Cubemap          = 0x00000200,
+            CubemapPositiveX = 0x00000600,
+            CubemapNegativeX = 0x00000a00,
+            CubemapPositiveY = 0x00001200,
+            CubemapNegativeY = 0x00002200,
+            CubemapPositiveZ = 0x00004200,
+            CubemapNegativeZ = 0x00008200,
+            Volume           = 0x00200000,
         }
 
         enum DDSDataType : uint
@@ -83,7 +103,7 @@ namespace OFC.Asset.FileFormat
             /// <summary> The number of mip maps contained for the surface</summary>
             public uint mipmapCount;
 
-            /// <summary> Reserved Data. NVTT (Nvidia Tex Tools) puts the program name here</summary>
+            /// <summary> 44 bytes of reserved data. NVTT (Nvidia Texture Tools) puts the program name here</summary>
             public byte[] reserved0x1C;
         }
 
@@ -237,15 +257,7 @@ namespace OFC.Asset.FileFormat
                         flags0x10 = bis.ReadUInt32()
                     };
 
-                    Log.Warn("DX10 DDS Files are not supported.");
-                    return false;
-                }
-
-                //Only support 'RGBA_F32' and 'RGBA_U8'
-                if(pixelFormat.dataType != DDSDataType.RGBA_U8 && pixelFormat.dataType != DDSDataType.RGBA_F32)
-                {
-                    Log.Warn("Unsupported DDS type.");
-                    return false;
+                    throw new Exception("DX10 DDS Files are not supported.");
                 }
 
                 //Load DDS data
@@ -266,6 +278,9 @@ namespace OFC.Asset.FileFormat
                     case DDSDataType.RGBA_F32:
                         ReadSurfaceF128(bis, ref ddsMainSurface);
                         break;
+
+                    default:
+                        throw new Exception("Unsupported DDS pixel format.");
                 }
 
                 asset.AddSubImage(ref ddsMainSurface);

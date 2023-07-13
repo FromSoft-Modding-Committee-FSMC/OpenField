@@ -1,22 +1,21 @@
 //
 // MPC (MULTIPLE PACKET CONTAINER) File Format
-// File Version 3, Spec Version 5
+// File Version 3, Spec Version 6
 
 //Format Definitions
+#define MPC_MAGIC 0x6643504D
 #define MPC_VERSION 3
 #define MPC_COMPVER 2
 
 //Packet Definitions
 #define MPC_PKT_VBNIFAST "VBFL"		//Fast loading Vertex Buffer, no indices or anything.
 #define MPC_PKT_TEXTUREF "TEXR"		//Texture Reference. Stores exclusively a filename (+ extension)
-#define MPC_PKT_TEXTURED "TEXD"		//Texture Data. Actual colour data.
 #define MPC_PKT_COLLMESH "VBCL"		//Collision Mesh Buffer
 #define MPC_PKT_VTXABASE "VBMB"		//Vertex Morph Base
 #define MPC_PKT_VTXAPOSE "VBMP"		//Vertex Morph Frame/Pose
 #define MPC_PKT_MATERIAL "MTRL"		//A Material packet. Deprecated.
 #define MPC_PKT_USERDATA "USER"		//A User Packet. Stores non format defined data.
 #define MPC_PKT_TEXTNOTE "TXTN"		//Simple text packet. Could be used for copyright notices.
-#define MPC_PKT_TEXTTABL "TXTT"		//More advanced text packet, using a key/data type storage.
 #define MPC_PKT_ENDFILEP "ENDF"		//End of File packet. dataCount and dataPerSize should be 0 when used.
 
 /** MPC Header	(Length = 16 Bytes)
@@ -77,43 +76,6 @@ typedef struct
 {
 	char TextureName[64];
 }  MPCTextureReference;
-
-  
-/** MPC Texture Data (Length = N Bytes, PacketID = MPC_PKT_TEXTURED)
- * stores only the file name of a texture
-**/
-typedef struct
-{
-	/* MPCTextureData Types */
-	typedef struct {	//A 1-Dimensional array type, containing colours with simple compression. Length = 8 + N bytes
-		uint8_t componentCount;		//How many components are in each colour, RGBA = 4, R = 1.
-		uint8_t bitsPerComponent;	//How many bits are used to store each component
-		uint8_t componentFormat;	//How the components are to be decoded, Ex: 0 = byte, 1 = word ... 6 = float, etc
-		uint8_t compressionMethod;	//How each colour is compressed, Ex: 0 = None, 1 = RLE, etc
-		uint32_t bitCount;		//Total bit size of the palette. Divide by 8 and round up to get the actual size of the buffer.
-
-		uint8_t paletteBuffer[ceil(bitCount >> 3)];		
-	} MPCTexturePalette;
-
-	typedef struct {	//A 2-Dimensional array type, containing either palette indices or colours.
-		uint8_t componentCount;		//How many components are in each colour or index, RGBA = 4, R = 1.
-		uint8_t bitsPerComponent;	//How many bits are used to store each component
-		uint8_t componentFormat;	//How the components are to be decoded, Ex: 0 = byte, 1 = word ... 6 = float, etc
-		uint8_t compressionMethod;	//How each colour/index is compressed, Ex: 0 = None, 1 = RLE, etc
-		uint32_t bitCount;			//Total bit size of the plane. Divide by 8 and round up to get the actual size of the buffer.
-		uint32_t flags;				//Flags controlling how the plane is to be handled. For ex, 0x00000001 would be an indexed image.
-		
-		uint8_t planeBuffer[ceil(bitCount >> 3)];		
-	} MPCTexturePlane;
-
-	/* MPCTextureData */
-	char     TextureName[16];
-	uint16_t numPalette;
-	uint16_t numPlane;
-	
-	MPCTexturePalette palettes[numPalette];
-	MPCTexturePlane planes[numPlane];
-}  MPCTextureData;
 
 
 /** MPC Fast Vertex Buffer (Length = 32 + N Bytes, PacketID = MPC_PKT_VBNIFAST)
@@ -176,13 +138,3 @@ typedef struct
 	
 	MPCMorphPoseVertex PoseData[numVertex];
 } MPCMorphPose;
-
-/** MPC Waveform (Length = , PacketID = MPC_PKT_WAVEFORM)
- * Stores an audio waveform, and data required for proper playback.
-**/
-typedef struct
-{
-	uint32_t sampleRate;
-	uint16_t sampleFormat;	//U8, S8, U16, S16, U32, S32, F32
-	uint16_t channelCount;  //0, 1, ..., 5, ..., 10 ...
-} MPCWaveform;

@@ -128,7 +128,7 @@ namespace OFC.Input
 
                         //
                         //  Explanation on this break/continue mess:
-                        //    Axis type inputs use a 'first come, first server' approach,
+                        //    Axis type inputs use a 'first come, first serve' approach,
                         //    meaning the first Control which returns a non-zero value will be used.
                         //  
                         //    We use continue on a Control which returned 0 for the axis to restart the loop,

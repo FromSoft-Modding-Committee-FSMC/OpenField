@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenFieldCore", "OpenFieldC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenFieldForge", "OpenFieldForge\OpenFieldForge.csproj", "{4DB11ABD-D050-4950-93B7-6BCA2223997E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenFieldEditor", "OpenFieldEditor\OpenFieldEditor.csproj", "{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2AE03B0E-0881-43BE-B5EF-7D9C5D07675D} = {2AE03B0E-0881-43BE-B5EF-7D9C5D07675D}
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenFieldEditor", "OpenFieldEditor\OpenFieldEditor.csproj", "{A687502A-576A-4D36-8A49-7CEC17D867D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E4D0FC0A-171B-4D5C-8861-E360414A850D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Global
@@ -60,18 +62,18 @@ Global
 		{4DB11ABD-D050-4950-93B7-6BCA2223997E}.Release|x64.Build.0 = Release|Any CPU
 		{4DB11ABD-D050-4950-93B7-6BCA2223997E}.Release|x86.ActiveCfg = Release|Any CPU
 		{4DB11ABD-D050-4950-93B7-6BCA2223997E}.Release|x86.Build.0 = Release|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Debug|x64.Build.0 = Debug|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Debug|x86.Build.0 = Debug|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Release|x64.ActiveCfg = Release|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Release|x64.Build.0 = Release|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Release|x86.ActiveCfg = Release|Any CPU
-		{7F6DE7F5-971B-4FC7-9FBF-917BA3B2320D}.Release|x86.Build.0 = Release|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Debug|x64.Build.0 = Debug|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Debug|x86.Build.0 = Debug|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Release|x64.ActiveCfg = Release|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Release|x64.Build.0 = Release|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{A687502A-576A-4D36-8A49-7CEC17D867D7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,36 +1,17 @@
-﻿using OFC.Asset.Factory;
-using OFC.Utility;
-using System;
-
-namespace OFE
+namespace OpenFieldEditor
 {
-    class Program
+    internal static class Program
     {
-        public static TextureFactory textureFactory;
-
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
+        [STAThread]
         static void Main()
         {
-            //Program Initialization
-            Log.EnableColour(true);
-
-            //Initialize Resource Handlers
-            textureFactory = new TextureFactory();
-            textureFactory.RegisterHandler(new OFF.FileFormat.FileFormatTIM()); //Register TIM
-
-            Log.Info("Exportable Formats: ");
-            foreach(string s in textureFactory.EnumerateExportableFormats())
-            {
-                Log.Info($"(Texture) {s}");
-            }
-
-            Log.Info("Importable Formats: ");
-            foreach (string s in textureFactory.EnumerateImportableFormats())
-            {
-                Log.Info($"(Texture) {s}");
-            }
-
-            using Game game = new Game();
-            game.Run();
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
+            ApplicationConfiguration.Initialize();
+            Application.Run(new MainWindow());
         }
     }
 }
