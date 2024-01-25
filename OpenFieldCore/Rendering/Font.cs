@@ -1,11 +1,8 @@
-﻿using System;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.IO;
 
-using OFC.Asset.Factory;
 using OFC.Utility;
-using OFC.Asset;
-using OFC.Mathematics;
+using OFC.Numerics;
 
 namespace OFC.Rendering
 {
@@ -39,12 +36,12 @@ namespace OFC.Rendering
 
         public struct Glyph
         {
-            public Vector2s uv;
-            public Vector2s uv2;
+            public Vector2f uv;
+            public Vector2f uv2;
         }
 
         //Data
-        public Texture fontAtlas;
+        //public Texture fontAtlas;
         public JSONGlyph[] glyphs;
 
         public Font(string fontPath)
@@ -55,6 +52,7 @@ namespace OFC.Rendering
             Log.Info($"New Font [name = {file.atlas.name}, atlas = {file.atlas.file}]");
 
             //Load Font Atlas
+            /*
             TextureFactory textureFactory = new TextureFactory();
             if (!textureFactory.GetHandler(0).Load(Path.Combine(Path.GetDirectoryName(fontPath), file.atlas.file), out TextureAsset asset))
             {
@@ -63,6 +61,7 @@ namespace OFC.Rendering
             }
             fontAtlas = new Texture(asset);
             glyphs = file.glyphs;
+            */
         }
     }
 }

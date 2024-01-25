@@ -1,0 +1,57 @@
+{
+	"program" : {
+		"type":3
+	},
+	"uniforms": [
+		"model",
+		"view",
+		"projection",
+		"diffuseColour"
+	],
+	"samplers": [
+		{
+			"name": "diffuseMap",
+			"tileU": 33071,
+			"tileV": 33071,
+			"filterMin": 9984,
+			"filterMag": 9728,
+			"filterBias": 0,
+			"filterAnisotropy": 0.0
+		}
+	],
+	"vertexSource": [
+		"#version 330 core",
+		"layout(location = 0) in vec3 vertexPosition;",
+		"layout(location = 1) in vec3 vertexNormal;",
+		"layout(location = 2) in vec2 vertexTexcoord;",
+
+		"out vec3 normal;",
+		"out vec2 texcoord;",
+
+		"uniform mat4 model;",
+		"uniform mat4 view;",
+		"uniform mat4 projection;",
+
+		"void main()",
+		"{",
+		"    gl_Position = ((projection * view) * model) * vec4(vertexPosition, 1.0);",
+		"    normal = normalize(vertexNormal);",
+		"    texcoord = vertexTexcoord;",
+		"}"
+	],
+	"fragmentSource": [
+		"#version 330 core",
+		"layout(location = 0) out vec4 FragDiffuse;",
+
+		"in vec3 normal;",
+		"in vec2 texcoord;",
+
+		"uniform sampler2D diffuseMap;",
+		"uniform vec4 diffuseColour;",
+
+		"void main()",
+		"{",
+		"    FragDiffuse = vec4(normal, 1.0) + texture(diffuseMap, texcoord);",
+		"}"
+	]
+}

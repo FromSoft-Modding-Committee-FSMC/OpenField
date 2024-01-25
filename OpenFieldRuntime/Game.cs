@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-
-using OpenTK;
-using OpenTK.Input;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Graphics.OpenGL;
 
-using OFC.Utility;
 using OFC.Input;
 using OFC.Rendering;
-using OFC.Mathematics;
-
-using OFC.Asset;
-using OFC.Asset.Factory;
-using OFC.Asset.Format;
-using OFC.Asset.FileFormat;
+using OFC.Resource;
+using OFC.World;
+using OFC.Resource.Shader;
+using OFC.Resource.Model;
+using OFC.Resource.Texture;
+using System.ComponentModel;
+using OFC.Utility;
+using System.Runtime.InteropServices;
+using OFC.Numerics;
+using OFC.World.Graph;
+using OFC.Resource.Material;
 
 namespace OFR
 {
@@ -25,17 +23,17 @@ namespace OFR
     {
         private static readonly GameWindowSettings gameWindowSettings = new GameWindowSettings
         {
-            RenderFrequency = 0.0d,
-            UpdateFrequency = 0.0d
+            RenderFrequency = 0d,
+            UpdateFrequency = 60d
         };
         private static readonly NativeWindowSettings nativeWindowSettings = new NativeWindowSettings
         {
             Title = "Open Field Runtime",
-            Size = new OpenTK.Mathematics.Vector2i(1024, 768),
-            Location = new OpenTK.Mathematics.Vector2i(448, 156),
+            Size = new OpenTK.Mathematics.Vector2i(960, 540),
+            Location = new OpenTK.Mathematics.Vector2i(120, 270), //480, 270
             AutoLoadBindings = true,
             API = ContextAPI.OpenGL,
-            APIVersion = Version.Parse("3.3"),
+            APIVersion = Version.Parse("4.5"),
             Profile = ContextProfile.Core,
             AspectRatio = null,
             AlphaBits = 8,
@@ -52,130 +50,170 @@ namespace OFR
             WindowBorder = WindowBorder.Fixed,
             SrgbCapable = false,
             IsEventDriven = false,
-            Flags = ContextFlags.ForwardCompatible,
+            Flags = ContextFlags.ForwardCompatible
         };
+
+        // Very temporary testing shit
+        double timeKeeper;
+        int frames;
+
+        Camera cameraTemp;
+
+
+        TextureResource textureResTemp;
+        TextureResource textureRes44;
+        ModelResource modelResTemp;
+        ModelResource modelRes2;
+        ModelResource modelRes3;
+
+        ShaderResource shaderResTemp;
+        TilemapZone3D tempTilemap;
+        MaterialResource dynamicMaterial;
 
         public Game() : base(gameWindowSettings, nativeWindowSettings)
         {
             VSync = VSyncMode.Off;
-            InputManager.Initialize(this);
+            CursorState = CursorState.Grabbed;
         }
-
-        private static Texture testTexture;
-        private static Texture testTexture2;
-        private static Font testFont;
 
         protected override void OnLoad()
         {
-            base.OnLoad();
+            //
+            // Testing - Sync Resources
+            //
+            ResourceManager.Load("Shader\\NormalTexcoord3D.jfx", out shaderResTemp);
+            shaderResTemp.Use();
 
-            TextureFactory textureFactory = new TextureFactory();
+            ResourceManager.Load("Texture\\ga_cave_0000.tga", out textureResTemp);
+            ResourceManager.Load("Model\\BARREL.ms3d", out modelRes2);
 
-            //Test Export Formats
-            List<string> expFormats = textureFactory.EnumerateExportableFormats();
-            Log.Info("Exportable Texture Formats: ");
-            foreach(string fmtDesc in expFormats)
-            {
-                Console.WriteLine(fmtDesc);
-            }
-            Console.WriteLine();
+            // Initialize Debug
+            GL.Enable(EnableCap.DebugOutput);
+            GL.DebugMessageCallback(DebugCallback, IntPtr.Zero);
 
-            //Test Import Formats
-            List<string> impFormats = textureFactory.EnumerateImportableFormats();
-            Log.Info("Importable Texture Formats: ");
-            foreach (string fmtDesc in impFormats)
-            {
-                Console.WriteLine(fmtDesc);
-            }
-            Console.WriteLine();
+            //
+            // Camera
+            //
+            cameraTemp = new Camera(60f, 960f / 540f, 0.01f, 1024f);
 
-            //Test DDS IMport
-            TextureAsset texture;
-            if (!textureFactory.GetHandler(0).Load("Resources\\Font\\bookman3.dds", out texture))
-            {
-                Log.Error("Failed to load file!");
-            }
-            testTexture = new Texture(texture);
+            //
+            // Testing - Tilemap
+            //
+            tempTilemap = new TilemapZone3D(modelResTemp, shaderResTemp);
+            tempTilemap.worldCamera = cameraTemp;
+            tempTilemap.zoneGraph.Add(new ObjectGraphNode(new Vector3f(6f, 0f, 6f), Vector3f.Zero, Vector3f.Zero, modelRes2));
+            tempTilemap.zoneGraph.Add(new ObjectGraphNode(new Vector3f(6f, 0f, 5f), Vector3f.Zero, Vector3f.Zero, modelRes2));
 
-            if (!textureFactory.GetHandler(0).Load("Resources\\Texture\\test_rgbaf32.dds", out texture))
-            {
-                Log.Error("Failed to load file!");
-            }
-            testTexture2 = new Texture(texture);
-
-            //Test Fonts
-            testFont = new Font("Resources\\Font\\bookman.json");
-
+            //
+            // Initialize 2D Renderer
+            //
             Render2D.Initialize();
+            Render2D.Resize(960, 540);
 
-            Resize += Render2D.Resize;
+            //
+            // Testing a dynamic material
+            //
+            
+
+            ResourceManager.Load("Texture\\ga_test_0000.tga", out textureRes44);
+            dynamicMaterial = new(shaderResTemp, EResourceState.Ready, 0, "internal", 12345678);
+            dynamicMaterial.SetParameter("diffuseMap", textureRes44);
+
+            ResourceManager.Store("testDynamic", dynamicMaterial);
+
+            ResourceManager.Dump();
+
+            ResourceManager.Load("Model\\plane_xz.ms3d", out modelRes3);
+            modelRes3.GetMesh<StaticMesh>(0).Material = dynamicMaterial;
+
+            ResourceManager.Load("Model\\ts_cave_0000.ms3d", out modelResTemp);
+            //
+            // Initialize Input Manager
+            //
+            InputManager.Initialize(this);
         }
-
-        private double timeTotal;
-        private double frameTotal;
-        private int frameSampleCount;
-
-        Random rnd = new Random();
-
-        float rot = 0f;
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
-            base.OnRenderFrame(args);
-
-            GL.ClearColor(0F, 0f, 0f, 1f);
+            GL.ClearColor(0f, 0f, 0f, 1f);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Vector2s statPos = new(0f, 32);
-            Vector2s XY = new((1024f/2f)-128f, (768f/2f)-128f);
-            Vector2s WH = new(256f, 256f);
-            Colour C1 = new(0f, 1f, 1f, 1f);
-            Colour C2 = new(1f, 0f, 1f, 1f);
-            Colour C3 = new(1f, 1f, 0f, 1f);
-            Colour C4 = new(1f, 1f, 1f, 1f);
+            RenderContext.Reset();
+            RenderContext.CurrentCamera = cameraTemp;
 
-            rot += (float) (MathF.PI * args.Time);
-            if(rot >= 360f)
+            GL.Enable(EnableCap.CullFace);
+            GL.Enable(EnableCap.DepthTest);
+
+            //These will be set by the material automatically...
+            Render3D.DrawMesh(modelRes3, 0, Matrix4f.CreateTranslation(0, 0, 0));
+            Render3D.DrawModel(modelResTemp, Matrix4f.CreateTranslation(0, 0, 0));
+
+            Render3D.DrawModel(modelRes2, Matrix4f.CreateTranslation(-5, 0,  0));
+            Render3D.DrawModel(modelRes2, Matrix4f.CreateTranslation( 5, 0,  0));
+            Render3D.DrawModel(modelRes2, Matrix4f.CreateTranslation( 0, 0, -5));
+            Render3D.DrawModel(modelRes2, Matrix4f.CreateTranslation( 0, 0,  5));
+
+            //
+            // Track FPS/ms
+            //
+            timeKeeper += args.Time;
+            frames++;
+            if(timeKeeper >= 1d)
             {
-                rot = 0f;
+                Console.WriteLine($"Batches This Frame = {Render2D.Batches}, fps = {frames}, ms = {1000d * args.Time:F2}");
+                timeKeeper = 0d;
+                frames = 0;
             }
 
-            Render2D.DrawBegin();
-            for (int i = 0; i < 5000; ++i)
-            {
-                Render2D.DrawRectangle(ref XY, ref WH, ref C1, ref C2, ref C3, ref C4, ref testTexture);
-            }
-
-            Render2D.DrawText(ref statPos, ref testFont, ref C4, $"FPS: {(1f / args.Time):F0}, MS: {(args.Time * 1000):F4}, Batches: {Render2D.BatchesThisFrame}");
-            Render2D.DrawEnd();
-
-            //Framerate calculation
-            frameTotal += (1f / args.Time);
-            frameSampleCount++;
-
-            timeTotal += args.Time;
-            if(timeTotal >= 1.0d)
-            {
-                Console.WriteLine($"Frame [AvgFPS: {(frameTotal / frameSampleCount):F0}, RealFPS: {(frameSampleCount / timeTotal):F0}, MS: {(args.Time * 1000):F4}, Batches: {Render2D.BatchesThisFrame}]");
-
-                frameSampleCount = 0;
-                frameTotal = 0f;
-                timeTotal = 0d;
-            }
-
+            //Cycle buffers
             SwapBuffers();
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            base.OnUpdateFrame(e);
-
+            // Update Input Manager
             InputManager.Update();
 
-            if(InputManager.InputReleased("TestButton"))
+            // Update Camera
+            cameraTemp.AddRotation(InputManager.InputValue("RHAxisX") * -2.0f, InputManager.InputValue("RHAxisY") * -2.0f, 0f);
+
+            cameraTemp.AddPosition(cameraTemp.Front * (4f * InputManager.InputValue("LHAxisY") * (float)e.Time));
+            cameraTemp.AddPosition(cameraTemp.Right * (4f * InputManager.InputValue("LHAxisX") * (float)e.Time));
+            cameraTemp.Update();
+        }
+
+        protected void DebugCallback(DebugSource source, DebugType type, int ID, DebugSeverity severity, int length, nint message, nint userParam)
+        {
+            string ErrSource = source switch
             {
-                Close();
-            }
+                DebugSource.DebugSourceApi => "API",
+                DebugSource.DebugSourceApplication => "Application",
+                DebugSource.DebugSourceOther => "Other",
+                DebugSource.DebugSourceShaderCompiler => "Shader Compiler",
+                DebugSource.DebugSourceThirdParty => "Third Party",
+                DebugSource.DebugSourceWindowSystem => "Window System",
+                _ => "?"
+            };
+
+            string ErrType = type switch
+            {
+                DebugType.DebugTypeDeprecatedBehavior => "Deprecated",
+                DebugType.DebugTypePerformance => "Performance",
+                DebugType.DebugTypePortability => "Portability",
+                DebugType.DebugTypeError => "Error",
+                DebugType.DebugTypeUndefinedBehavior => "Undefined Behaviour",
+                _ => "?"
+            };
+
+            string ErrSevr = severity switch
+            {
+                DebugSeverity.DebugSeverityHigh   => "High",
+                DebugSeverity.DebugSeverityMedium => "Medium",
+                DebugSeverity.DebugSeverityLow    => "Low",
+                _ => "None"
+            };
+
+            Log.Write($"GL:{ErrType}:{ErrSevr}", 0xFFC000, Marshal.PtrToStringAnsi(message, length));
         }
     }
 }

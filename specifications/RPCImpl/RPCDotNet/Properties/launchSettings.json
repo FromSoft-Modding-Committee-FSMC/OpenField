@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RPCTool": {
+      "commandName": "Project",
+      "commandLineArgs": "convert /i \"C:\\Users\\lXDayDreamXl\\Desktop\\something.tim\" /ofmt rpc"
+    }
+  }
+}

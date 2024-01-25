@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using OFC.Mathematics;
+﻿using OFC.Numerics;
 
 namespace OFC.Collision.Shape
 {
     public class SphereCollisionShape : ICollisionShape
     {
-        public Vector2s origin = Vector2s.Zero;
+        public Vector2f origin = new Vector2f(0f, 0f);
         public float radius = 16f;
 
-        public bool LineIntersects(Vector2s p1, Vector2s p2)
+        public bool LineIntersects(Vector2f p1, Vector2f p2)
         {
             return false;
         }

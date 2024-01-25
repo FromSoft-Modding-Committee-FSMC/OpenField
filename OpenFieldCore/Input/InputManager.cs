@@ -23,26 +23,49 @@ namespace OFC.Input
 
             inputMaps = new Dictionary<string, InputMapping>
             {
-                { "TestButton", new InputMapping
+                { "RHAxisX", new InputMapping
                     {
                         controls = new Control[]
                         {
-                            Control.Button(InputDeviceType.Gamepad, Input.GamepadStart),
-                            Control.Button(InputDeviceType.Mouse, Input.MouseMiddle),
-                            Control.Button(InputDeviceType.Keyboard, Input.KeyboardEscape)
+                            Control.Axis(InputDeviceType.Mouse, Input.MouseAxisX, 1f)
                         },
-                        mappingType = InputMappingType.Button
+                        mappingType = InputMappingType.Axis
                     }
                 },
-                { "TestAxis", new InputMapping
+                { "RHAxisY", new InputMapping
                     {
                         controls = new Control[]
                         {
-                            Control.Axis(InputDeviceType.Gamepad, Input.GamepadAxisLX, 1f),
-                            Control.Axis(InputDeviceType.Mouse, Input.MouseAxisX, 1f),
+                            Control.Axis(InputDeviceType.Mouse, Input.MouseAxisY, 1f)
+                        },
+                        mappingType = InputMappingType.Axis
+                    }
+                },
+                { "LHAxisX", new InputMapping
+                    {
+                        controls = new Control[]
+                        {
                             Control.Axis(InputDeviceType.Keyboard, Input.KeyboardA, Input.KeyboardD, 1f)
                         },
-                        mappingType = InputMappingType.Axis,
+                        mappingType = InputMappingType.Axis
+                    }
+                },
+                { "LHAxisY", new InputMapping
+                    {
+                        controls = new Control[]
+                        {
+                            Control.Axis(InputDeviceType.Keyboard, Input.KeyboardS, Input.KeyboardW, 1f)
+                        },
+                        mappingType = InputMappingType.Axis
+                    }
+                },
+                { "LHAxisZ", new InputMapping
+                    {
+                        controls = new Control[]
+                        {
+                            Control.Axis(InputDeviceType.Keyboard, Input.KeyboardE, Input.KeyboardQ, 1f)
+                        },
+                        mappingType = InputMappingType.Axis
                     }
                 }
             };

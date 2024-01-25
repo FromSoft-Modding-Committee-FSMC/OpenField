@@ -1,0 +1,7 @@
+Item Script:
+	OnPickup();
+	OnPickupConfirmed();
+	OnPickupCanceled();
+	OnUse();
+
+	Data Area Size = 128 Bytes

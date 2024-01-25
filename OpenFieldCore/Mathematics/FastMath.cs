@@ -52,14 +52,11 @@ namespace OFC.Mathematics
 
             return x;
         }
-        public static float Cos3(float x)
+        public unsafe static float Cos3(float x)
         {
-            unsafe
-            {
-                x += 1.5707963275f;
-                bool b = (x > 3.141592655f);
-                x -= (6.28318531f * *((byte*)&b));
-            }
+            x += 1.5707963275f;
+            bool b = (x > 3.141592655f);
+            x -= (6.28318531f * *((byte*)&b));
             x = 1.27323954474f * x - 0.40528473456f * x * MathF.Abs(x);
             return 0.225f * (x * MathF.Abs(x) - x) + x;
         }

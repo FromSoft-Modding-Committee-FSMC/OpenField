@@ -1,0 +1,14 @@
+Glyph Struct:
+u1, v1
+u2, v2
+atlasID
+
+Glyph Attributes Struct:
+xPregap, xPostgap
+yOffset
+
+Atlas Struct:
+file
+
+Font Attributes Struct:
+mode (bitmap, sdf, msdf, msdf+)

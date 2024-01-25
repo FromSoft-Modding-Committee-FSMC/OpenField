@@ -45,9 +45,7 @@ namespace OFC.Utility
             {
                 outputDelegate(string.Join("",
                     logHeadingStart,
-                    $"{dt.Day:D2}:{dt.Month:D2}:{dt.Year:D4}".Colourize(0xCCCCCC),
-                    logHeadingCenter,
-                    $"{dt.Hour:D2}:{dt.Minute:D2}:{dt.Second:D2}",
+                    $"{dt.Year:D4}-{dt.Month:D2}-{dt.Day:D2} {dt.Hour:D2}:{dt.Minute:D2}:{dt.Second:D2}".Colourize(0xCCCCCC),
                     logHeadingCenter,
                     heading.Colourize(headingColour),
                     logHeadingEnd,
@@ -58,9 +56,7 @@ namespace OFC.Utility
             {
                 outputDelegate(string.Join("",
                     "<[",
-                    $"{dt.Day:D2}:{dt.Month:D2}:{dt.Year:D4}",
-                    "]-[",
-                    $"{dt.Hour:D2}:{dt.Minute:D2}:{dt.Second:D2}",
+                    $"{dt.Year:D4}-{dt.Month:D2}-{dt.Day:D2} {dt.Hour:D2}:{dt.Minute:D2}:{dt.Second:D2}",
                     "]-[",
                     heading,
                     "]>: ",

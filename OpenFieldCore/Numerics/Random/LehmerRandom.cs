@@ -18,7 +18,7 @@ namespace OFC.Numerics.Random
 
         private ulong Next()
         {
-            seed = seed * 48271 % 0xffffffff;
+            seed = (seed * 48271) % 0xffffffff;
             return seed;
         }
 

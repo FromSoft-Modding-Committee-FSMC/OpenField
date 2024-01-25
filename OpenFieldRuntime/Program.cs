@@ -1,9 +1,7 @@
-﻿using System;
-
-using MoonSharp.Interpreter;
-
+﻿using MoonSharp.Interpreter;
+using OFC.Audio;
+using OFC.Resource;
 using OFC.Utility;
-using OFC.IO.Hashing;
 
 namespace OFR
 {
@@ -32,6 +30,9 @@ namespace OFR
 
             luaScript.DoString(script);
 
+            DynValue v = luaScript.Globals.Get("Bob");
+            v.IsNilOrNan();
+
             luaScript.Call(luaScript.Globals["test1"]);
             luaScript.Call(luaScript.Globals["test2"]);
         }
@@ -39,6 +40,10 @@ namespace OFR
         static void Main()
         {
             //LuaHello();
+
+            //Initialization of OpenFieldCore systems
+            ResourceManager.Initialize();
+            //AudioManager.Initialize();
 
             using Game game = new Game();
             game.Run();

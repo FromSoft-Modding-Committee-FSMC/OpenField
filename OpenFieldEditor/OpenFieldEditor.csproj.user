@@ -4,7 +4,10 @@
   <ItemGroup />
   <ItemGroup />
   <ItemGroup>
-    <Compile Update="MainWindow.cs">
+    <Compile Update="ProjectsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SplashWindow.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

@@ -35,7 +35,7 @@ dotnet_style_collection_initializer = true:suggestion
 
 # Naming rules
 
-dotnet_naming_rule.non_field_members_should_be_camel_case.severity = suggestion
+dotnet_naming_rule.non_field_members_should_be_camel_case.severity = silent
 dotnet_naming_rule.non_field_members_should_be_camel_case.symbols = non_field_members
 dotnet_naming_rule.non_field_members_should_be_camel_case.style = camel_case
 
@@ -101,11 +101,11 @@ dotnet_naming_style.pascal_case.capitalization = pascal_case
 
 # Naming rules
 
-dotnet_naming_rule.interface_should_be_begins_with_i.severity = suggestion
+dotnet_naming_rule.interface_should_be_begins_with_i.severity = silent
 dotnet_naming_rule.interface_should_be_begins_with_i.symbols = interface
 dotnet_naming_rule.interface_should_be_begins_with_i.style = begins_with_i
 
-dotnet_naming_rule.types_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.types_should_be_pascal_case.severity = silent
 dotnet_naming_rule.types_should_be_pascal_case.symbols = types
 dotnet_naming_rule.types_should_be_pascal_case.style = pascal_case
 

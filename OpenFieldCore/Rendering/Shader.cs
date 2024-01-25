@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
 
 using OFC.Utility;
-using OFC.Mathematics;
+using OFC.Numerics;
 
 namespace OFC.Rendering
 {
@@ -145,11 +145,10 @@ namespace OFC.Rendering
                     //Default Configuration for sampler
                     GL.SamplerParameter(glSampler, SamplerParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
                     GL.SamplerParameter(glSampler, SamplerParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
-                    GL.SamplerParameter(glSampler, SamplerParameterName.TextureMinFilter, (int)TextureMinFilter.NearestMipmapNearest);
+                    GL.SamplerParameter(glSampler, SamplerParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
                     GL.SamplerParameter(glSampler, SamplerParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
-                    GL.SamplerParameter(glSampler, SamplerParameterName.TextureMaxAnisotropyExt, 1f);
-
-                    Log.Info($"New Shader Sampler [id = {samplerId}, name = {samplerName}, gl id = {glSampler}]");
+                    GL.SamplerParameter(glSampler, SamplerParameterName.TextureMaxAnisotropyExt, 16f);
+                    GL.SamplerParameter(glSampler, SamplerParameterName.TextureLodBias, -1.0f);
                 }
             }
         }
@@ -187,7 +186,7 @@ namespace OFC.Rendering
         /// <summary> Sets a vector2 uniform </summary>
         /// <param name="uniformName">Uniform Name</param>
         /// <param name="vec">A Vector2s (32-bit float components)</param>
-        public void SetVector2(string uniformName, ref Vector2s vec)
+        public void SetVector2(string uniformName, ref Vector2f vec)
         {
             GL.Uniform2(programUniforms[uniformName], vec.X, vec.Y);
         }
@@ -203,24 +202,17 @@ namespace OFC.Rendering
         /// <summary> Sets a vector3 uniform </summary>
         /// <param name="uniformName">Uniform Name</param>
         /// <param name="vec">A Vector3s (32-bit float components)</param>
-        public void SetVector3(string uniformName, ref Vector3s vec)
+        public void SetVector3(string uniformName, ref Vector3f vec)
         {
             GL.Uniform3(programUniforms[uniformName], vec.X, vec.Y, vec.Z);
         }
 
-        /// <summary> Sets a vector4 uniform </summary>
-        /// <param name="uniformName">Uniform Name</param>
-        /// <param name="vec">A Vector4s (32-bit float components)</param>
-        public void SetVector4(string uniformName, ref Vector4s vec)
-        {
-            GL.Uniform4(programUniforms[uniformName], vec.X, vec.Y, vec.Z, vec.W);
-        }
         public void SetVector4(string uniformName, ref Colour colour)
         {
             GL.Uniform4(programUniforms[uniformName], colour.R, colour.G, colour.B, colour.A);
         }
 
-        public void SetMatrix44(string uniformName, ref Matrix44 mat)
+        public void SetMatrix44(string uniformName, ref Matrix4f mat)
         {
             GL.UniformMatrix4(programUniforms[uniformName], 1, false, mat.Components); 
         }
@@ -238,7 +230,6 @@ namespace OFC.Rendering
         {
             GL.SamplerParameter(programSamplers[programUniforms[samplerName]].sampler, SamplerParameterName.TextureMinFilter, (int)filterMode);
         }
-
         public void SetSampler2D(string samplerName, int textureUnit)
         {
             GL.Uniform1(programUniforms[samplerName], textureUnit);

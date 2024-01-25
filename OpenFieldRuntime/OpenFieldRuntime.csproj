@@ -38,6 +38,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="C:\Users\lXDayDreamXl\Documents\GitHub\Open-Field\Resources\Shader\NormalTexcoord3D.fss" />
+    <None Remove="C:\Users\lXDayDreamXl\Documents\GitHub\Open-Field\Resources\Shader\NormalTexcoord3D.vss" />
+    <None Remove="C:\Users\lXDayDreamXl\Documents\GitHub\Open-Field\Resources\Texture\bigtga2.tga" />
+    <None Remove="C:\Users\lXDayDreamXl\Documents\GitHub\Open-Field\Resources\Texture\bigtga3.tga" />
+    <None Remove="C:\Users\lXDayDreamXl\Documents\GitHub\Open-Field\Resources\Texture\bigtga4.tga" />
     <None Remove="D:\REEEE\OpenFieldProject\OpenField_vs2022\Resources\Shader\Colour2D.frag" />
   </ItemGroup>
 

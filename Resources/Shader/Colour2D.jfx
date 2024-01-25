@@ -1,0 +1,40 @@
+{
+	"program" : {
+		"type":3
+	},
+	"uniforms":[
+		"projection"
+	],
+	"samplers": [
+		{
+			"name": "sDiffuse",
+			"tileU": 33071,
+			"tileV": 33071,
+			"filterMin": 9728,
+			"filterMag": 9728,
+			"filterBias": -1.0,
+			"filterAnisotropy": 0.0
+		}
+	],
+	"vertexSource":[
+		"#version 330 core",
+		"layout(location = 0) in vec2 vertexPosition;",
+		"layout(location = 1) in vec4 vertexColour;",		
+		"out vec4 fragColour;",	
+		"uniform mat4 projection;",	
+		"void main()",
+		"{",
+		"    gl_Position = projection * vec4(vertexPosition, 0.0f, 1.0f);",
+		"    fragColour = vertexColour / 255.0f;",
+		"}"	
+	],
+	"fragmentSource":[
+		"#version 330 core",
+		"layout(location = 0) out vec4 fragDiffuse;",
+		"in vec4 fragColour;",		
+		"void main()",
+		"{",
+		"    fragDiffuse = vec4(fragColour.z, fragColour.x, fragColour.y, fragColour.w);",
+		"}"
+	]
+}
